@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     `INSERT INTO users
        (username, email, password_hash, role, email_verified, verification_token, token_expires_at)
      VALUES (?, ?, ?, 'user', FALSE, ?, ?)`,
-    [username.trim(), email.trim(), passwordHash, token, tokenExpiresAt]
+    [username.trim(), email.trim(), passwordHash, token, tokenExpiresAt.toISOString().slice(0, 19).replace('T', ' ')]
   );
 
   try {
