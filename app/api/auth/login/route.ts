@@ -9,6 +9,7 @@ interface UserRow extends RowDataPacket {
   username: string;
   password_hash: string;
   role: UserRole;
+  email_verified: boolean;
 }
 
 export async function POST(req: Request) {
@@ -25,7 +26,7 @@ export async function POST(req: Request) {
   }
 
   const rows = await query<UserRow>(
-    'SELECT id, username, password_hash, role FROM users WHERE username = ? LIMIT 1',
+    'SELECT id, username, password_hash, role, email_verified FROM users WHERE username = ? LIMIT 1',
     [username.trim()]
   );
 
@@ -37,6 +38,13 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { error: 'Tên đăng nhập hoặc mật khẩu không đúng' },
       { status: 401 }
+    );
+  }
+
+  if (!user.email_verified) {
+    return NextResponse.json(
+      { error: 'Email chưa được xác nhận. Kiểm tra hộp thư và nhấp vào liên kết xác nhận.' },
+      { status: 403 }
     );
   }
 

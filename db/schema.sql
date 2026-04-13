@@ -2,32 +2,78 @@
 CREATE DATABASE IF NOT EXISTS simple_blog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE simple_blog;
 
+-- ─── categories (must exist before posts) ────────────────────────
+CREATE TABLE IF NOT EXISTS categories (
+  slug        VARCHAR(50)  NOT NULL,
+  label       VARCHAR(100) NOT NULL,
+  description TEXT         NULL,
+  created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (slug)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO categories (slug, label) VALUES
+  ('life',     'Cuộc sống'),
+  ('notes',    'Ghi chú'),
+  ('thoughts', 'Suy nghĩ');
+
+-- ─── posts ───────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS posts (
   id           INT AUTO_INCREMENT PRIMARY KEY,
-  title        VARCHAR(255)  NOT NULL,
-  slug         VARCHAR(255)  NOT NULL UNIQUE,
-  excerpt      TEXT          NOT NULL,
-  content      LONGTEXT      NOT NULL,
-  category     ENUM('life', 'notes', 'thoughts') NOT NULL DEFAULT 'thoughts',
-  published    BOOLEAN       NOT NULL DEFAULT FALSE,
-  reading_time INT           NOT NULL DEFAULT 1,  -- minutes
-  view_count   INT           NOT NULL DEFAULT 0,
-  created_at   DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at   DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  title        VARCHAR(255) NOT NULL,
+  slug         VARCHAR(255) NOT NULL UNIQUE,
+  excerpt      TEXT         NOT NULL,
+  content      LONGTEXT     NOT NULL,
+  category     VARCHAR(50)  NOT NULL DEFAULT 'thoughts',
+  published    BOOLEAN      NOT NULL DEFAULT FALSE,
+  reading_time INT          NOT NULL DEFAULT 1,  -- minutes
+  view_count   INT          NOT NULL DEFAULT 0,
+  created_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_slug       (slug),
   INDEX idx_category   (category),
   INDEX idx_published  (published),
   INDEX idx_created    (created_at DESC),
-  INDEX idx_view_count (view_count DESC)
+  INDEX idx_view_count (view_count DESC),
+  CONSTRAINT fk_post_category FOREIGN KEY (category) REFERENCES categories(slug) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- ─── users ───────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS users (
-  id            INT AUTO_INCREMENT PRIMARY KEY,
-  username      VARCHAR(100) NOT NULL UNIQUE,
-  password_hash VARCHAR(255) NOT NULL,
-  role          ENUM('user', 'admin') NOT NULL DEFAULT 'user',
-  created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  INDEX idx_username (username)
+  id                 INT AUTO_INCREMENT PRIMARY KEY,
+  username           VARCHAR(100) NOT NULL UNIQUE,
+  email              VARCHAR(255) NULL UNIQUE,
+  email_verified     BOOLEAN      NOT NULL DEFAULT FALSE,
+  verification_token VARCHAR(255) NULL,
+  token_expires_at   DATETIME     NULL,
+  password_hash      VARCHAR(255) NOT NULL,
+  role               ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+  created_at         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_username           (username),
+  INDEX idx_email              (email),
+  INDEX idx_verification_token (verification_token)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ─── comments ────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS comments (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  post_id    INT  NOT NULL,
+  user_id    INT  NOT NULL,
+  content    TEXT NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_comment_post (post_id),
+  INDEX idx_comment_user (user_id),
+  CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES posts(id)  ON DELETE CASCADE,
+  CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES users(id)  ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ─── post_views (time-based analytics) ───────────────────────────
+CREATE TABLE IF NOT EXISTS post_views (
+  id        INT AUTO_INCREMENT PRIMARY KEY,
+  post_id   INT      NOT NULL,
+  viewed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_pv_post (post_id),
+  INDEX idx_pv_date (viewed_at),
+  CONSTRAINT fk_pv_post FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ─── Seed data ───────────────────────────────────────────────────

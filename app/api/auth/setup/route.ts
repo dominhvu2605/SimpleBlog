@@ -36,7 +36,7 @@ export async function POST(req: Request) {
 
   const hash = await hashPassword(password);
   await query(
-    `INSERT INTO users (username, password_hash, role) VALUES (?, ?, 'admin')`,
+    `INSERT INTO users (username, password_hash, role, email_verified) VALUES (?, ?, 'admin', TRUE)`,
     [username.trim(), hash]
   );
 

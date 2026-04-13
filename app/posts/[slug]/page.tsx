@@ -6,6 +6,7 @@ import { formatDate, categoryLabel } from '@/lib/format';
 import { extractHeadings, renderMarkdown } from '@/lib/toc';
 import TableOfContents from '@/components/ui/TableOfContents';
 import ViewTracker from '@/components/ui/ViewTracker';
+import CommentSection from '@/components/ui/CommentSection';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -116,6 +117,11 @@ export default async function PostPage({ params }: Props) {
                 </Link>
               ) : <div />}
             </nav>
+
+            <hr className="border-[#E5E5E3] mt-10" />
+
+            {/* Comments */}
+            <CommentSection slug={slug} />
           </article>
 
           {/* ── TOC Sidebar (xl+ only) ── */}

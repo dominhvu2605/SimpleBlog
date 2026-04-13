@@ -1,4 +1,8 @@
 import { scrypt, randomBytes, timingSafeEqual, createHmac } from 'crypto';
+
+export function generateVerificationToken(): string {
+  return randomBytes(32).toString('hex'); // 64-char hex string
+}
 import { promisify } from 'util';
 import { cookies } from 'next/headers';
 
