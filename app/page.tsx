@@ -8,7 +8,7 @@ import CategorySidebar from '@/components/ui/CategorySidebar';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Your Blog',
+  title: 'MeoCuti Blog',
   description: 'Ghi chép về cuộc sống, công việc và những suy nghĩ hàng ngày.',
 };
 
