@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4",
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.7.0",
@@ -18,17 +19,16 @@
     "nodemailer": "^8.0.5",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "reading-time": "^1.5.0"
+    "reading-time": "^1.5.0",
+    "tailwindcss": "^4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.37",
     "@types/nodemailer": "^8.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }
