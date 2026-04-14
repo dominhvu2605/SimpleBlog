@@ -18,14 +18,14 @@ const lora = Lora({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Your Blog',
-    template: '%s — Your Blog',
+    default: 'MeoCuti Blog',
+    template: '%s — MeoCuti Blog',
   },
   description: 'Ghi chép về cuộc sống, công việc và những suy nghĩ hàng ngày.',
   openGraph: {
     type: 'website',
     locale: 'vi_VN',
-    siteName: 'Your Blog',
+    siteName: 'MeoCuti Blog',
   },
 };
 
