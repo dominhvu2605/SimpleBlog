@@ -67,8 +67,8 @@ export default function AdminCommentsPage() {
       ) : comments.length === 0 ? (
         <p className="text-[0.875rem] text-[#9CA3AF] py-8 text-center">Không tìm thấy bình luận nào.</p>
       ) : (
-        <div className="border border-[#E5E5E3] rounded-lg overflow-hidden">
-          <table className="w-full text-[0.8125rem]">
+        <div className="border border-[#E5E5E3] rounded-lg overflow-x-auto">
+          <table className="w-full text-[0.8125rem] min-w-[560px]">
             <thead className="bg-[#FAFAF8] border-b border-[#E5E5E3]">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-[#6B7280] w-28">Người dùng</th>

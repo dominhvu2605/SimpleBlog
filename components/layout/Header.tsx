@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { User } from 'lucide-react';
+import { Menu, User, X } from 'lucide-react';
 
 const NAV_LINKS = [
   { href: '/',       label: 'Home' },
@@ -22,9 +22,10 @@ export default function Header() {
   const router   = useRouter();
 
   // undefined = loading, null = guest, object = logged in
-  const [user, setUser] = useState<SessionUser | null | undefined>(undefined);
-  const [open, setOpen] = useState(false);
-  const dropdownRef     = useRef<HTMLLIElement>(null);
+  const [user, setUser]       = useState<SessionUser | null | undefined>(undefined);
+  const [open, setOpen]       = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const dropdownRef           = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     setUser(undefined);
@@ -46,7 +47,7 @@ export default function Header() {
   }, []);
 
   // Close on navigation
-  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => { setOpen(false); setMobileOpen(false); }, [pathname]);
 
   async function handleSignOut() {
     await fetch('/api/auth/logout', { method: 'POST' });
@@ -67,8 +68,8 @@ export default function Header() {
           MeoCuti
         </Link>
 
-        {/* Navigation */}
-        <nav>
+        {/* Desktop navigation (sm+) */}
+        <nav className="hidden sm:block">
           <ul className="flex items-center gap-6">
             {NAV_LINKS.map(({ href, label }) => {
               const isActive = href === '/'
@@ -158,7 +159,89 @@ export default function Header() {
             </li>
           </ul>
         </nav>
+
+        {/* Mobile hamburger button (< sm) */}
+        <button
+          className="sm:hidden flex items-center text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label="Mở menu"
+          aria-expanded={mobileOpen}
+        >
+          {mobileOpen ? <X size={20} strokeWidth={1.75} /> : <Menu size={20} strokeWidth={1.75} />}
+        </button>
       </div>
+
+      {/* Mobile navigation dropdown (< sm) */}
+      {mobileOpen && (
+        <div className="sm:hidden border-t border-[#E5E5E3] bg-[#FAFAF8] px-6 py-4">
+          <nav>
+            <ul className="space-y-1">
+              {NAV_LINKS.map(({ href, label }) => {
+                const isActive = href === '/'
+                  ? pathname === '/'
+                  : pathname.startsWith(href);
+                return (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      className={[
+                        'block py-2 text-[0.9375rem] transition-colors',
+                        isActive
+                          ? 'text-[#1A1A1A] font-medium'
+                          : 'text-[#6B7280] hover:text-[#1A1A1A]',
+                      ].join(' ')}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li className="border-t border-[#E5E5E3] pt-3 mt-2">
+                {user === undefined ? null : user ? (
+                  <div className="space-y-1">
+                    {user.role === 'admin' ? (
+                      <Link
+                        href="/admin"
+                        className="block py-2 text-[0.9375rem] text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                      >
+                        Trang admin
+                      </Link>
+                    ) : (
+                      <Link
+                        href="/profile"
+                        className="block py-2 text-[0.9375rem] text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                      >
+                        {user.username}
+                      </Link>
+                    )}
+                    <button
+                      onClick={handleSignOut}
+                      className="block w-full text-left py-2 text-[0.9375rem] text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                    >
+                      Đăng xuất
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <Link
+                      href="/login"
+                      className="block py-2 text-[0.9375rem] text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                    >
+                      Đăng nhập
+                    </Link>
+                    <Link
+                      href="/register"
+                      className="block py-2 text-[0.9375rem] text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                    >
+                      Đăng ký
+                    </Link>
+                  </div>
+                )}
+              </li>
+            </ul>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

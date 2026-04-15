@@ -91,8 +91,8 @@ export default function AdminCategoriesPage() {
       {/* Add new category */}
       <form onSubmit={handleAdd} className="mb-8 p-5 border border-[#E5E5E3] rounded-lg space-y-4">
         <p className="text-[0.8125rem] font-medium text-[#1A1A1A]">Thêm category mới</p>
-        <div className="flex gap-3">
-          <div className="w-36">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="sm:w-36">
             <label className="block text-[0.75rem] text-[#9CA3AF] mb-1">Slug</label>
             <input
               type="text" required value={newSlug}
@@ -101,7 +101,7 @@ export default function AdminCategoriesPage() {
               className="w-full px-3 py-2 text-[0.875rem] font-mono border border-[#E5E5E3] rounded-md outline-none focus:border-[#2D2D2D] transition-colors"
             />
           </div>
-          <div className="w-40">
+          <div className="sm:w-40">
             <label className="block text-[0.75rem] text-[#9CA3AF] mb-1">Label</label>
             <input
               type="text" required value={newLabel}
@@ -119,10 +119,10 @@ export default function AdminCategoriesPage() {
               className="w-full px-3 py-2 text-[0.875rem] border border-[#E5E5E3] rounded-md outline-none focus:border-[#2D2D2D] transition-colors"
             />
           </div>
-          <div className="flex items-end">
+          <div className="flex sm:items-end">
             <button
               type="submit" disabled={adding}
-              className="px-4 py-2 text-[0.875rem] font-medium bg-[#1A1A1A] text-white rounded-md hover:bg-[#2D2D2D] disabled:opacity-50 transition-colors"
+              className="w-full sm:w-auto px-4 py-2 text-[0.875rem] font-medium bg-[#1A1A1A] text-white rounded-md hover:bg-[#2D2D2D] disabled:opacity-50 transition-colors"
             >
               {adding ? '…' : '+ Thêm'}
             </button>
@@ -136,8 +136,8 @@ export default function AdminCategoriesPage() {
           {[1, 2, 3].map((i) => <div key={i} className="h-12 bg-[#E5E5E3] rounded animate-pulse" />)}
         </div>
       ) : (
-        <div className="border border-[#E5E5E3] rounded-lg overflow-hidden">
-          <table className="w-full text-[0.8125rem]">
+        <div className="border border-[#E5E5E3] rounded-lg overflow-x-auto">
+          <table className="w-full text-[0.8125rem] min-w-[480px]">
             <thead className="bg-[#FAFAF8] border-b border-[#E5E5E3]">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-[#6B7280] w-32">Slug</th>

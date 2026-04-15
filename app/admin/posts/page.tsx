@@ -51,28 +51,30 @@ export default function AdminPostsPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-3 mb-5">
+      <div className="flex flex-wrap gap-3 mb-5">
         <input
           type="text"
           placeholder="Tìm theo tiêu đề…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 px-3.5 py-2 text-[0.875rem] border border-[#E5E5E3] rounded-md outline-none focus:border-[#2D2D2D] transition-colors"
+          className="flex-1 min-w-[160px] px-3.5 py-2 text-[0.875rem] border border-[#E5E5E3] rounded-md outline-none focus:border-[#2D2D2D] transition-colors"
         />
-        {(['all', 'published', 'draft'] as Filter[]).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={[
-              'px-3 py-2 text-[0.8125rem] rounded-md border transition-colors',
-              filter === f
-                ? 'border-[#2D2D2D] text-[#1A1A1A] font-medium'
-                : 'border-[#E5E5E3] text-[#6B7280] hover:border-[#2D2D2D]',
-            ].join(' ')}
-          >
-            {{ all: 'Tất cả', published: 'Đã xuất bản', draft: 'Bản nháp' }[f]}
-          </button>
-        ))}
+        <div className="flex gap-2 flex-wrap">
+          {(['all', 'published', 'draft'] as Filter[]).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={[
+                'px-3 py-2 text-[0.8125rem] rounded-md border transition-colors whitespace-nowrap',
+                filter === f
+                  ? 'border-[#2D2D2D] text-[#1A1A1A] font-medium'
+                  : 'border-[#E5E5E3] text-[#6B7280] hover:border-[#2D2D2D]',
+              ].join(' ')}
+            >
+              {{ all: 'Tất cả', published: 'Đã xuất bản', draft: 'Bản nháp' }[f]}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Table */}
@@ -85,8 +87,8 @@ export default function AdminPostsPage() {
       ) : posts.length === 0 ? (
         <p className="text-[0.875rem] text-[#9CA3AF] py-8 text-center">Không tìm thấy bài viết nào.</p>
       ) : (
-        <div className="border border-[#E5E5E3] rounded-lg overflow-hidden">
-          <table className="w-full text-[0.8125rem]">
+        <div className="border border-[#E5E5E3] rounded-lg overflow-x-auto">
+          <table className="w-full text-[0.8125rem] min-w-[600px]">
             <thead className="bg-[#FAFAF8] border-b border-[#E5E5E3]">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-[#6B7280]">Tiêu đề</th>

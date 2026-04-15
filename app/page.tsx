@@ -38,7 +38,7 @@ export default async function HomePage({ searchParams }: Props) {
               <h1 className="font-serif text-[2rem] font-semibold text-[#1A1A1A] leading-tight mb-3">
                 MeoCuti
               </h1>
-              <p className="text-[1rem] text-[#6B7280] leading-relaxed whitespace-nowrap">
+              <p className="text-[1rem] text-[#6B7280] leading-relaxed">
                 Ghi chép về cuộc sống, công việc và những suy nghĩ hàng ngày.
               </p>
             </section>

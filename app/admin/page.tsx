@@ -77,7 +77,7 @@ export default function AdminDashboard() {
 
       {/* Stat cards */}
       {stats ? (
-        <div className="grid grid-cols-3 gap-4 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           {statCards.map(({ label, value }) => (
             <div key={label} className="border border-[#E5E5E3] rounded-lg p-5">
               <p className="text-[2rem] font-semibold text-[#1A1A1A] leading-none">{value.toLocaleString()}</p>
@@ -86,7 +86,7 @@ export default function AdminDashboard() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-4 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           {[1, 2, 3].map((i) => (
             <div key={i} className="border border-[#E5E5E3] rounded-lg p-5 animate-pulse">
               <div className="h-8 w-16 bg-[#E5E5E3] rounded mb-2" />
