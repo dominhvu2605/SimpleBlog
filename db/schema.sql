@@ -39,19 +39,28 @@ CREATE TABLE IF NOT EXISTS posts (
 
 -- ─── users ───────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS users (
-  id                 INT AUTO_INCREMENT PRIMARY KEY,
-  username           VARCHAR(100) NOT NULL UNIQUE,
-  email              VARCHAR(255) NULL UNIQUE,
-  email_verified     BOOLEAN      NOT NULL DEFAULT FALSE,
-  verification_token VARCHAR(255) NULL,
-  token_expires_at   DATETIME     NULL,
-  password_hash      VARCHAR(255) NOT NULL,
-  role               ENUM('user', 'admin') NOT NULL DEFAULT 'user',
-  created_at         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  id                       INT AUTO_INCREMENT PRIMARY KEY,
+  username                 VARCHAR(100) NOT NULL UNIQUE,
+  email                    VARCHAR(255) NULL UNIQUE,
+  email_verified           BOOLEAN      NOT NULL DEFAULT FALSE,
+  verification_token       VARCHAR(255) NULL,
+  token_expires_at         DATETIME     NULL,
+  password_hash            VARCHAR(255) NOT NULL,
+  role                     ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+  reset_token              VARCHAR(255) NULL,
+  reset_token_expires_at   DATETIME     NULL,
+  created_at               DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_username           (username),
   INDEX idx_email              (email),
-  INDEX idx_verification_token (verification_token)
+  INDEX idx_verification_token (verification_token),
+  INDEX idx_reset_token        (reset_token)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Migration (chạy một lần nếu bảng đã tồn tại):
+-- ALTER TABLE users
+--   ADD COLUMN IF NOT EXISTS reset_token VARCHAR(255) NULL,
+--   ADD COLUMN IF NOT EXISTS reset_token_expires_at DATETIME NULL,
+--   ADD INDEX IF NOT EXISTS idx_reset_token (reset_token);
 
 -- ─── comments ────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS comments (

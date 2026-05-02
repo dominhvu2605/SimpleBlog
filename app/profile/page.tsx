@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { getSession } from '@/lib/auth';
 import { query } from '@/lib/db';
 import { formatDate } from '@/lib/format';
+import ProfileForms from '@/components/ui/ProfileForms';
 import type { RowDataPacket } from 'mysql2/promise';
 
 export const metadata: Metadata = { title: 'Profile' };
@@ -47,10 +48,6 @@ export default async function ProfilePage() {
           Thông tin
         </h2>
         <dl className="space-y-4">
-          <div className="flex gap-8">
-            <dt className="w-32 text-[0.875rem] text-[#9CA3AF] shrink-0">Tên đăng nhập</dt>
-            <dd className="text-[0.875rem] text-[#1A1A1A]">{session.username}</dd>
-          </div>
           {userRow?.email && (
             <div className="flex gap-8">
               <dt className="w-32 text-[0.875rem] text-[#9CA3AF] shrink-0">Email</dt>
@@ -72,16 +69,20 @@ export default async function ProfilePage() {
         </dl>
       </section>
 
-      <section>
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/"
-            className="px-4 py-2 text-[0.875rem] border border-[#E5E5E3] rounded-md text-[#6B7280] hover:text-[#1A1A1A] hover:border-[#2D2D2D] transition-colors"
-          >
-            ← Về trang chủ
-          </Link>
-        </div>
-      </section>
+      <hr className="border-[#E5E5E3] mb-10" />
+
+      <ProfileForms username={session.username} />
+
+      <hr className="border-[#E5E5E3] mt-12 mb-8" />
+
+      <div className="flex flex-wrap gap-3">
+        <Link
+          href="/"
+          className="px-4 py-2 text-[0.875rem] border border-[#E5E5E3] rounded-md text-[#6B7280] hover:text-[#1A1A1A] hover:border-[#2D2D2D] transition-colors"
+        >
+          ← Về trang chủ
+        </Link>
+      </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ export default function AboutPage() {
       <article>
         <header className="mb-10">
           <h1 className="font-serif text-[2rem] font-semibold text-[#1A1A1A] leading-tight">
-            About
+            Đôi điều về tôi
           </h1>
         </header>
 
@@ -32,12 +32,16 @@ export default function AboutPage() {
             Không có lịch đăng bài. Không có SEO chiến lược. Chỉ là viết khi có điều gì đó cần viết.
           </p>
 
-          <h2>Tìm tôi ở đâu</h2>
+          <h2>Liên hệ</h2>
 
           <ul>
             <li className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              <a href="https://www.facebook.com/minhvux99" target="_blank" rel="noopener noreferrer">@minhvux99</a>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+              <a href="https://www.facebook.com/minhvux99" target="_blank" rel="noopener noreferrer">Minh Vũ</a>
+            </li>
+            <li className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6.94 6.5a1.44 1.44 0 1 1 0-2.88 1.44 1.44 0 0 1 0 2.88zM4.5 8.25h4.88V20H4.5zM9.88 8.25h4.67v1.6h.07c.65-1.16 2.24-2.38 4.61-2.38 4.93 0 5.84 3.24 5.84 7.45V20h-4.88v-6.7c0-1.6-.03-3.66-2.23-3.66-2.23 0-2.57 1.74-2.57 3.54V20H9.88z" /></svg>
+              <a href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener noreferrer">Đỗ Minh Vũ</a>
             </li>
             <li className="flex items-center gap-2">
               <Mail size={16} aria-hidden="true" />
@@ -45,7 +49,7 @@ export default function AboutPage() {
             </li>
             <li className="flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-              <a href="https://github.com/dominhvu2605" target="_blank" rel="noopener noreferrer">@dominhvu2605</a>
+              <a href="https://github.com/dominhvu2605" target="_blank" rel="noopener noreferrer">dominhvu2605</a>
             </li>
           </ul>
         </div>

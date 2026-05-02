@@ -1,13 +1,22 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import type { Metadata } from 'next';
+import { Suspense, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
-// Note: metadata không hoạt động trong 'use client' — khai báo ở layout riêng nếu cần
+function ResetSuccessBanner() {
+  const searchParams = useSearchParams();
+  if (searchParams.get('reset') !== '1') return null;
+  return (
+    <p className="text-[0.9375rem] text-[#1A1A1A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-md px-4 py-3 mb-6">
+      Mật khẩu đã được đặt lại. Bạn có thể đăng nhập ngay bây giờ.
+    </p>
+  );
+}
 
 export default function LoginPage() {
   const router = useRouter();
+
   const [form, setForm]       = useState({ username: '', password: '' });
   const [error, setError]     = useState('');
   const [loading, setLoading] = useState(false);
@@ -48,6 +57,10 @@ export default function LoginPage() {
           Chào mừng trở lại.
         </p>
 
+        <Suspense>
+          <ResetSuccessBanner />
+        </Suspense>
+
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label
@@ -69,12 +82,20 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-[0.8125rem] font-medium text-[#1A1A1A] mb-1.5"
-            >
-              Mật khẩu
-            </label>
+            <div className="flex items-center justify-between mb-1.5">
+              <label
+                htmlFor="password"
+                className="text-[0.8125rem] font-medium text-[#1A1A1A]"
+              >
+                Mật khẩu
+              </label>
+              <Link
+                href="/forgot-password"
+                className="text-[0.8125rem] text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+              >
+                Quên mật khẩu?
+              </Link>
+            </div>
             <input
               id="password"
               type="password"
