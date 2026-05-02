@@ -34,7 +34,7 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
     return <Result type="invalid" />;
   }
 
-  const expiresAt = new Date(user.token_expires_at);
+  const expiresAt = new Date(user.token_expires_at + 'Z');
   if (expiresAt < new Date()) {
     return <Result type="expired" />;
   }

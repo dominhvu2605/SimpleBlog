@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     );
   }
 
-  if (new Date(user.reset_token_expires_at) < new Date()) {
+  if (new Date(user.reset_token_expires_at + 'Z') < new Date()) {
     return NextResponse.json(
       { error: 'Liên kết đã hết hạn. Vui lòng yêu cầu đặt lại mật khẩu lại.' },
       { status: 400 }
