@@ -1,30 +1,30 @@
 import Link from 'next/link';
 import { getPopularByCategory } from '@/lib/posts';
-import { categoryLabel } from '@/lib/format';
-import type { Category } from '@/types';
-
-const CATEGORY_ORDER: Category[] = ['notes', 'life', 'thoughts'];
+import { getAllCategories } from '@/lib/categories';
 
 export default async function CategorySidebar() {
-  const popular = await getPopularByCategory(4);
+  const [popular, categories] = await Promise.all([
+    getPopularByCategory(4),
+    getAllCategories(),
+  ]);
 
-  // Filter out empty categories
-  const sections = CATEGORY_ORDER.filter((cat) => popular[cat]?.length > 0);
+  // Keep DB order; skip categories with no published posts
+  const sections = categories.filter((cat) => popular[cat.slug]?.length > 0);
   if (sections.length === 0) return null;
 
   return (
     <aside className="hidden xl:block">
-      <div className="sticky top-20 w-[200px] space-y-8">
-        {sections.map((cat) => (
-          <section key={cat}>
+      <div className="sticky top-20 w-[200px]">
+        {sections.map((cat, i) => (
+          <section key={cat.slug} className={i > 0 ? 'border-t border-[#E5E5E3] pt-6' : ''}>
             <Link
-              href={cat === 'thoughts' ? '/' : `/${cat}`}
+              href={`/category/${cat.slug}`}
               className="block text-[0.6875rem] font-semibold tracking-widest uppercase text-[#9CA3AF] hover:text-[#6B7280] transition-colors mb-3"
             >
-              {categoryLabel[cat]}
+              {cat.label}
             </Link>
             <ul className="space-y-2">
-              {popular[cat].map((post) => (
+              {popular[cat.slug].map((post) => (
                 <li key={post.id}>
                   <Link
                     href={`/posts/${post.slug}`}
