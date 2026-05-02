@@ -123,7 +123,7 @@ export default function Header() {
                     : 'text-[#6B7280] hover:text-[#1A1A1A]',
                 ].join(' ')}
               >
-                Home
+                Trang chủ
               </Link>
             </li>
 
@@ -140,7 +140,7 @@ export default function Header() {
                       : 'text-[#6B7280] hover:text-[#1A1A1A]',
                   ].join(' ')}
                 >
-                  Categories
+                  Danh mục
                   <ChevronDown
                     size={13}
                     strokeWidth={2}
@@ -184,7 +184,7 @@ export default function Header() {
                     : 'text-[#6B7280] hover:text-[#1A1A1A]',
                 ].join(' ')}
               >
-                About
+                Giới thiệu
               </Link>
             </li>
 
@@ -294,7 +294,7 @@ export default function Header() {
                       : 'text-[#6B7280] hover:text-[#1A1A1A]',
                   ].join(' ')}
                 >
-                  Home
+                  Trang chủ
                 </Link>
               </li>
 
@@ -310,7 +310,7 @@ export default function Header() {
                         : 'text-[#6B7280] hover:text-[#1A1A1A]',
                     ].join(' ')}
                   >
-                    Categories
+                    Danh mục
                     <ChevronDown
                       size={14}
                       strokeWidth={2}
@@ -354,7 +354,7 @@ export default function Header() {
                       : 'text-[#6B7280] hover:text-[#1A1A1A]',
                   ].join(' ')}
                 >
-                  About
+                  Giới thiệu
                 </Link>
               </li>
 

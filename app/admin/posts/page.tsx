@@ -92,9 +92,9 @@ export default function AdminPostsPage() {
             <thead className="bg-[#FAFAF8] border-b border-[#E5E5E3]">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-[#6B7280]">Tiêu đề</th>
-                <th className="text-left px-4 py-3 font-medium text-[#6B7280] w-24">Category</th>
+                <th className="text-left px-4 py-3 font-medium text-[#6B7280] w-24">Danh mục</th>
                 <th className="text-left px-4 py-3 font-medium text-[#6B7280] w-24">Trạng thái</th>
-                <th className="text-right px-4 py-3 font-medium text-[#6B7280] w-20">Views</th>
+                <th className="text-right px-4 py-3 font-medium text-[#6B7280] w-20">Lượt xem</th>
                 <th className="text-left px-4 py-3 font-medium text-[#6B7280] w-32">Ngày tạo</th>
                 <th className="px-4 py-3 w-24" />
               </tr>

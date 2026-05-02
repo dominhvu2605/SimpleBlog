@@ -80,7 +80,7 @@ export default function AdminCategoriesPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-serif text-[1.75rem] font-semibold text-[#1A1A1A] mb-1">Category</h1>
+        <h1 className="font-serif text-[1.75rem] font-semibold text-[#1A1A1A] mb-1">Danh mục</h1>
         <p className="text-[0.9375rem] text-[#6B7280]">Quản lý danh mục bài viết.</p>
       </div>
 
@@ -90,7 +90,7 @@ export default function AdminCategoriesPage() {
 
       {/* Add new category */}
       <form onSubmit={handleAdd} className="mb-8 p-5 border border-[#E5E5E3] rounded-lg space-y-4">
-        <p className="text-[0.8125rem] font-medium text-[#1A1A1A]">Thêm category mới</p>
+        <p className="text-[0.8125rem] font-medium text-[#1A1A1A]">Thêm danh mục mới</p>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="sm:w-36">
             <label className="block text-[0.75rem] text-[#9CA3AF] mb-1">Slug</label>
@@ -141,7 +141,7 @@ export default function AdminCategoriesPage() {
             <thead className="bg-[#FAFAF8] border-b border-[#E5E5E3]">
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-[#6B7280] w-32">Slug</th>
-                <th className="text-left px-4 py-3 font-medium text-[#6B7280]">Label</th>
+                <th className="text-left px-4 py-3 font-medium text-[#6B7280]">Tên hiển thị</th>
                 <th className="text-left px-4 py-3 font-medium text-[#6B7280]">Mô tả</th>
                 <th className="text-right px-4 py-3 font-medium text-[#6B7280] w-20">Bài viết</th>
                 <th className="px-4 py-3 w-28" />

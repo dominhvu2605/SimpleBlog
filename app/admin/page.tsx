@@ -51,7 +51,7 @@ export default function AdminDashboard() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="font-serif text-[1.75rem] font-semibold text-[#1A1A1A] mb-1">Dashboard</h1>
+        <h1 className="font-serif text-[1.75rem] font-semibold text-[#1A1A1A] mb-1">Tổng quan</h1>
         <p className="text-[0.9375rem] text-[#6B7280]">Tổng quan hoạt động blog.</p>
       </div>
 
@@ -114,7 +114,7 @@ export default function AdminDashboard() {
                     {post.title}
                   </Link>
                   <span className="text-[0.8125rem] text-[#6B7280] shrink-0">
-                    {post.views.toLocaleString()} views
+                    {post.views.toLocaleString()} lượt xem
                   </span>
                 </li>
               ))}

@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV = [
-  { href: '/admin',            label: 'Dashboard' },
+  { href: '/admin',            label: 'Tổng quan' },
   { href: '/admin/posts',      label: 'Bài viết' },
-  { href: '/admin/categories', label: 'Category' },
+  { href: '/admin/categories', label: 'Danh mục' },
   { href: '/admin/comments',   label: 'Bình luận' },
 ];
 

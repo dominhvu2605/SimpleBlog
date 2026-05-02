@@ -173,7 +173,7 @@ export default function PostEditor({ mode, postId, initial }: PostEditorProps) {
       {/* Category + Published row */}
       <div className="flex gap-4">
         <div className="flex-1">
-          <label className="block text-[0.8125rem] font-medium text-[#1A1A1A] mb-1.5">Category</label>
+          <label className="block text-[0.8125rem] font-medium text-[#1A1A1A] mb-1.5">Danh mục</label>
           <select
             value={form.category}
             onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}
@@ -218,7 +218,7 @@ export default function PostEditor({ mode, postId, initial }: PostEditorProps) {
             type="button" onClick={togglePreview}
             className="text-[0.8125rem] text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
           >
-            {preview ? 'Chỉnh sửa' : 'Preview'}
+            {preview ? 'Chỉnh sửa' : 'Xem trước'}
           </button>
         </div>
 
