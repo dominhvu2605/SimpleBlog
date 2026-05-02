@@ -1,11 +1,11 @@
 import mysql, { type RowDataPacket } from 'mysql2/promise';
 
-// Singleton connection pool
-let pool: mysql.Pool | null = null;
+// Persist pool across HMR reloads in dev (globalThis survives module re-evaluation)
+const g = globalThis as typeof globalThis & { _dbPool?: mysql.Pool };
 
 export function getPool(): mysql.Pool {
-  if (!pool) {
-    pool = mysql.createPool({
+  if (!g._dbPool) {
+    g._dbPool = mysql.createPool({
       host:               process.env.DB_HOST     ?? 'localhost',
       port:               parseInt(process.env.DB_PORT ?? '3306'),
       user:               process.env.DB_USER     ?? 'root',
@@ -17,7 +17,7 @@ export function getPool(): mysql.Pool {
       dateStrings:        true,   // return DATETIME as "YYYY-MM-DD HH:MM:SS" strings, not Date objects
     });
   }
-  return pool;
+  return g._dbPool;
 }
 
 export async function query<T extends RowDataPacket>(

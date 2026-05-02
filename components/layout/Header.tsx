@@ -1,10 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Menu, User, X } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ChevronDown, Menu, Search, User, X } from 'lucide-react';
 import type { CategoryDef } from '@/types';
+import SearchOverlay from '@/components/ui/SearchOverlay';
+import HeaderSearch from '@/components/ui/HeaderSearch';
 
 interface SessionUser {
   username: string;
@@ -34,6 +37,11 @@ export default function Header() {
   const [catOpen, setCatOpen]         = useState(false);
   const [mobileOpen, setMobileOpen]   = useState(false);
   const [mobileCatOpen, setMobileCatOpen] = useState(false);
+  const [searchOpen, setSearchOpen]   = useState(false);
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
+
+  const categoryMatch  = pathname.match(/^\/category\/([^/]+)/);
+  const currentCategory = categoryMatch?.[1] ?? null;
 
   const dropdownRef    = useRef<HTMLLIElement>(null);
   const catDropdownRef = useRef<HTMLLIElement>(null);
@@ -71,6 +79,7 @@ export default function Header() {
     setCatOpen(false);
     setMobileOpen(false);
     setMobileCatOpen(false);
+    setSearchOpen(false);
   }, [pathname]);
 
   async function handleSignOut() {
@@ -84,15 +93,20 @@ export default function Header() {
   const anyCatActive = categories.some((cat) => isCategoryActive(cat.slug, pathname));
 
   return (
+    <>
     <header className="border-b border-[#E5E5E3] bg-[#FAFAF8]">
       <div className="mx-auto max-w-[760px] xl:max-w-[1020px] px-6 py-5 flex items-center justify-between">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="font-['Lora',Georgia,serif] text-[1.1rem] font-semibold text-[#1A1A1A] tracking-tight hover:opacity-70 transition-opacity"
-        >
-          MeoCuti
-        </Link>
+        {/* Left: Logo + Search */}
+        <div className="flex items-center gap-4">
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 font-['Lora',Georgia,serif] text-[1.1rem] font-semibold text-[#1A1A1A] tracking-tight hover:opacity-70 transition-opacity"
+          >
+            <Image src="/cat.svg" alt="" width={18} height={18} aria-hidden="true" />
+            MeoCuti
+          </Link>
+          <HeaderSearch defaultCategory={currentCategory} categories={categories} />
+        </div>
 
         {/* Desktop navigation (sm+) */}
         <nav className="hidden sm:block">
@@ -243,15 +257,24 @@ export default function Header() {
           </ul>
         </nav>
 
-        {/* Mobile hamburger button (< sm) */}
-        <button
-          className="sm:hidden flex items-center text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label="Mở menu"
-          aria-expanded={mobileOpen}
-        >
-          {mobileOpen ? <X size={20} strokeWidth={1.75} /> : <Menu size={20} strokeWidth={1.75} />}
-        </button>
+        {/* Mobile buttons (< sm) */}
+        <div className="sm:hidden flex items-center gap-3">
+          <button
+            onClick={() => setSearchOpen(true)}
+            aria-label="Tìm kiếm"
+            className="text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+          >
+            <Search size={20} strokeWidth={1.75} />
+          </button>
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Mở menu"
+            aria-expanded={mobileOpen}
+            className="flex items-center text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+          >
+            {mobileOpen ? <X size={20} strokeWidth={1.75} /> : <Menu size={20} strokeWidth={1.75} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile navigation dropdown (< sm) */}
@@ -384,5 +407,13 @@ export default function Header() {
         </div>
       )}
     </header>
+
+    <SearchOverlay
+      open={searchOpen}
+      onClose={closeSearch}
+      defaultCategory={currentCategory}
+      categories={categories}
+    />
+    </>
   );
 }
