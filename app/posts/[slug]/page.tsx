@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getPostBySlug, getAdjacentPosts } from '@/lib/posts';
-import { formatDate, categoryLabel } from '@/lib/format';
+import { formatDate } from '@/lib/format';
+import { getCategoryBySlug } from '@/lib/categories';
 import { extractHeadings, renderMarkdown } from '@/lib/toc';
 import TableOfContents from '@/components/ui/TableOfContents';
 import ViewTracker from '@/components/ui/ViewTracker';
@@ -36,9 +37,10 @@ export default async function PostPage({ params }: Props) {
   const post = await getPostBySlug(slug);
   if (!post) notFound();
 
-  const [{ prev, next }, htmlContent] = await Promise.all([
+  const [{ prev, next }, htmlContent, category] = await Promise.all([
     getAdjacentPosts(post.created_at),
     renderMarkdown(post.content),
+    getCategoryBySlug(post.category),
   ]);
   const headings = extractHeadings(post.content);
 
@@ -64,7 +66,7 @@ export default async function PostPage({ params }: Props) {
             {/* Header */}
             <header className="mb-10">
               <div className="flex items-center gap-2 text-[0.8125rem] text-[#9CA3AF] mb-4">
-                <span>{categoryLabel[post.category] ?? post.category}</span>
+                <span>{category?.label ?? post.category}</span>
                 <span>·</span>
                 <time dateTime={post.created_at}>{formatDate(post.created_at)}</time>
                 <span>·</span>

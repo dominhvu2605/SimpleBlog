@@ -11,8 +11,3 @@ export function getYear(dateStr: string): string {
   return format(date, 'yyyy');
 }
 
-export const categoryLabel: Record<string, string> = {
-  life:     'Cuộc sống',
-  notes:    'Ghi chú',
-  thoughts: 'Suy nghĩ',
-};

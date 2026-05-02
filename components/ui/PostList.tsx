@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import type { PostSummary } from '@/types';
-import { formatDate, getYear, categoryLabel } from '@/lib/format';
+import { formatDate, getYear } from '@/lib/format';
+import { getAllCategories } from '@/lib/categories';
 
 interface Props {
   posts: PostSummary[];
 }
 
-export default function PostList({ posts }: Props) {
+export default async function PostList({ posts }: Props) {
+  const categories = await getAllCategories();
+  const categoryLabel = Object.fromEntries(categories.map((c) => [c.slug, c.label]));
   if (posts.length === 0) {
     return (
       <p className="text-[#6B7280] text-[0.9375rem] py-12 text-center">
